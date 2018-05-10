@@ -1,0 +1,8 @@
+---
+- name: Install rust
+  shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+
+- name: Set up PATH
+  lineinfile:
+    path: "~/.bashrc"
+    line: "export PATH=\"$HOME/.cargo/bin:$PATH\""

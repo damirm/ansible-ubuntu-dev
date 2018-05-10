@@ -1,0 +1,29 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: Add docker official apt-key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add docker apt repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+    state: present
+
+- name: Install docker
+  apt: name=docker-ce update_cache=yes
+
+- name: Install docker-compose
+  pip:
+    name: docker-compose

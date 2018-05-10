@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include: tasks/packages.yml
+    - include: tasks/pip.yml
+    - include: tasks/docker.yml
+    - include: tasks/golang.yml
+    - include: tasks/rust.yml

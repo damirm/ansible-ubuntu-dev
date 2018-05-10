@@ -1,0 +1,12 @@
+---
+- name: Install packages
+  apt: 
+    name: "{{ item }}"
+  loop:
+    - tmux
+    - unzip
+    - curl
+    - wget
+    - wrk
+    - apache2-utils
+    - htop
