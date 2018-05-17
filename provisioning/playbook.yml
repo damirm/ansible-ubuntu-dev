@@ -7,3 +7,4 @@
     - include: tasks/docker.yml
     - include: tasks/golang.yml
     - include: tasks/rust.yml
+    - include: tasks/vim.yml

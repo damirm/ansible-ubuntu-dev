@@ -10,4 +10,4 @@
 - name: Set up PATH
   lineinfile:
     path: "~/.bashrc"
-    line: "export PATH=\"/usr/lib/go-1.10/bin:$PATH\""
+    line: "export PATH=\"/usr/lib/go-1.10/bin:~/go/bin:$PATH\""

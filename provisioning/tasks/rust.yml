@@ -1,6 +1,12 @@
 ---
+- name: Check rust installed
+  command: which rustup
+  register: rustup_installed
+  ignore_errors: yes
+
 - name: Install rust
   shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+  when: rustup_installed.rc != 0
 
 - name: Set up PATH
   lineinfile:
