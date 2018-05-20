@@ -8,3 +8,4 @@
     - include: tasks/golang.yml
     - include: tasks/rust.yml
     - include: tasks/vim.yml
+    - include: tasks/nvim.yml
