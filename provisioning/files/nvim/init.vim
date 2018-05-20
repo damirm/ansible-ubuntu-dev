@@ -6,7 +6,7 @@ Plug 'fatih/vim-go'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
