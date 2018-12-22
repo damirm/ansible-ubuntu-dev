@@ -5,5 +5,6 @@
   ignore_errors: yes
 
 - name: Install pip
+  become: true
   shell: "curl https://bootstrap.pypa.io/get-pip.py | python"
   when: pip_installed.rc != 0

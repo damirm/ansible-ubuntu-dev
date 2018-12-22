@@ -1,11 +1,20 @@
 ---
 - hosts: all
-  become: true
   tasks:
-    - include: tasks/packages.yml
+    - include_tasks:
+        file: tasks/packages.yml
+        apply:
+          become: true
+
     - include: tasks/pip.yml
-    - include: tasks/docker.yml
+
+    - include_tasks:
+        file: tasks/docker.yml
+        apply:
+          become: true
+
     - include: tasks/golang.yml
+    - include: tasks/nvim.yml
+
     - include: tasks/rust.yml
     - include: tasks/vim.yml
-    - include: tasks/nvim.yml

@@ -1,13 +1,26 @@
 ---
-- name: Add golang apt-repository
-  apt_repository:
-    repo: ppa:gophers/archive
-    state: present
+- name: Check golang installed
+  command: which go
+  register: go_installed
+  ignore_errors: yes
 
-- name: Install golang
-  apt: name=golang-1.10 update_cache=yes
+- name: Download and unarchive golang
+  become: true
+  unarchive:
+    src: https://dl.google.com/go/go1.11.linux-amd64.tar.gz
+    remote_src: yes
+    dest: /usr/local
+  when: go_installed.rc != 0
 
-- name: Set up PATH
-  lineinfile:
+- name: Setup golang environment
+  blockinfile:
     path: "~/.bashrc"
-    line: "export PATH=\"/usr/lib/go-1.10/bin:~/go/bin:$PATH\""
+    block: |
+      export GOROOT=/usr/local/go
+      export GOPATH=$HOME/go
+      export GO111MODULE=on
+      export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+- name: Fix GOPATH owner
+  become: yes
+  command: chown -R vagrant:vagrant /home/vagrant/go

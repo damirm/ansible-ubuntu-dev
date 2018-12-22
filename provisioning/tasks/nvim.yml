@@ -1,10 +1,12 @@
 ---
 - name: Add apt repository
+  become: true
   apt_repository:
     repo: ppa:neovim-ppa/stable
     state: present
 
 - name: Install neovim
+  become: true
   apt: name=neovim
 
 - name: Create nvim directories
@@ -12,7 +14,7 @@
     path: "{{ item }}"
     recurse: yes
     state: directory
-  loop: 
+  loop:
     - "~/.local/share/nvim/site/autoload/"
     - "~/.config/nvim/"
 
