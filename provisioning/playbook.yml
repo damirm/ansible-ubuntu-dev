@@ -18,3 +18,4 @@
 
     - include: tasks/rust.yml
     - include: tasks/vim.yml
+    - include: tasks/git.yml
