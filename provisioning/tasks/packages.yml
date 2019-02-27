@@ -1,6 +1,7 @@
 ---
 - name: Update apt
-  apt: update_cache=yes
+  apt:
+    update_cache: yes
 
 - name: Install packages
   become: true

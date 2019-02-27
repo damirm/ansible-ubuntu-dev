@@ -7,7 +7,7 @@
 - name: Download and unarchive golang
   become: true
   unarchive:
-    src: https://dl.google.com/go/go1.11.linux-amd64.tar.gz
+    src: https://dl.google.com/go/go1.12.linux-amd64.tar.gz
     remote_src: yes
     dest: /usr/local
   when: go_installed.rc != 0
@@ -22,5 +22,8 @@
       export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 - name: Fix GOPATH owner
-  become: yes
-  command: chown -R vagrant:vagrant /home/vagrant/go
+  file:
+    path: /home/vagrant/go
+    owner: vagrant
+    group: vagrant
+    state: directory
