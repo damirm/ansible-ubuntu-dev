@@ -8,3 +8,23 @@
   become: true
   shell: "curl https://bootstrap.pypa.io/get-pip.py | python"
   when: pip_installed.rc != 0
+
+- name: Install basic pip packages
+  become: yes
+  pip:
+    name: "{{item}}"
+  loop:
+    - virtualenv
+    - virtualenvwrapper
+
+- name: Create virtualenvs directory
+  file:
+    path: ~/.virtualenvs
+    state: directory
+
+- name: Setup virtualenv
+  blockinfile:
+    path: "~/.bashrc"
+    block: |
+      export WORKON_HOME=~/.virtualenvs
+      source /usr/local/bin/virtualenvwrapper.sh

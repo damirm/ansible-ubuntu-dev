@@ -8,6 +8,7 @@
   apt:
     name: "{{ item }}"
   loop:
+    - build-essential
     - tmux
     - unzip
     - curl
