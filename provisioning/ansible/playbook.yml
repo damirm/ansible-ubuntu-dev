@@ -1,0 +1,37 @@
+---
+- hosts: all
+  vars:
+    go:
+      version: 14.1
+      url: https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz
+      hashsumm: 2f49eb17ce8b48c680cdb166ffd7389702c0dec6effa090c324804a5cac8a7f8
+
+    java:
+      version: 14
+      url: https://download.java.net/java/GA/jdk14/076bab302c7b4508975440c56f6cc26a/36/GPL/openjdk-14_linux-x64_bin.tar.gz
+      sha256: https://download.java.net/java/GA/jdk14/076bab302c7b4508975440c56f6cc26a/36/GPL/openjdk-14_linux-x64_bin.tar.gz.sha256
+
+    gradle:
+      version: 6.2.2
+      url: https://services.gradle.org/distributions/gradle-6.2.2-all.zip
+
+  tasks:
+    - include_tasks:
+        file: tasks/packages.yml
+        apply:
+          become: true
+
+    - include: tasks/pip.yml
+
+    - include_tasks:
+        file: tasks/docker.yml
+        apply:
+          become: true
+
+    - include: tasks/vim.yml
+    - include: tasks/git.yml
+    - include: tasks/golang.yml
+    - include: tasks/java.yml
+
+    # - include: tasks/nvim.yml
+    # - include: tasks/rust.yml

@@ -1,0 +1,50 @@
+---
+# - name: Check java installed
+#   command: which java
+#   register: java_installed
+#   ignore_errors: yes
+
+- name: Download and unarchive java
+  become: true
+  unarchive:
+    src: "{{ java.url }}"
+    remote_src: yes
+    dest: /opt
+  # when: java_installed.rc != 0
+
+# Install gradle
+- name: Create gradle dir
+  become: true
+  file:
+    path: /opt/gradle/
+    state: directory
+
+- name: Check gradle installed
+  command: which gradle
+  register: gradle_installed
+  ignore_errors: yes
+
+- name: Download and unarchive gradle
+  become: true
+  unarchive:
+    src: "{{ gradle.url }}"
+    remote_src: yes
+    dest: /opt/gradle
+  when: gradle_installed.rc != 0
+
+- name: Setup java environment
+  become: True
+  blockinfile:
+    create: True
+    # path: "/etc/profile.d/jdk-{{ java.version }}.sh"
+    path: "~/.bashrc"
+    block: |
+      export JAVA_HOME=/opt/jdk-{{ java.version }}
+      export PATH=$PATH:$JAVA_HOME/bin:/opt/gradle/gradle-{{ gradle.version }}/bin
+
+- name: Install java packages
+  become: true
+  apt:
+    name: "{{ item }}"
+  loop:
+    - maven

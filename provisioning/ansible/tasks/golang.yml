@@ -4,19 +4,25 @@
   register: go_installed
   ignore_errors: yes
 
+- name: Create go dir
+  become: true
+  file:
+    path: /opt/go-{{ go.version }}/
+    state: directory
+
 - name: Download and unarchive golang
   become: true
   unarchive:
-    src: https://dl.google.com/go/go1.12.linux-amd64.tar.gz
+    src: "{{ go.url }}"
     remote_src: yes
-    dest: /usr/local
+    dest: /opt/go-{{ go.version }}/
   when: go_installed.rc != 0
 
 - name: Setup golang environment
   blockinfile:
     path: "~/.bashrc"
     block: |
-      export GOROOT=/usr/local/go
+      export GOROOT=/opt/go-{{ go.version }}/go
       export GOPATH=$HOME/go
       export GO111MODULE=on
       export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
